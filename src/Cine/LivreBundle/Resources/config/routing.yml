@@ -1,0 +1,15 @@
+cine_livre_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CineLivreBundle:Default:index }
+categ_livre:
+    path:     /categ
+    defaults: { _controller: CineLivreBundle:Categ:index }
+categ2:
+    path:     /categ2
+    defaults: { _controller: CineLivreBundle:Categ:index2 }
+auteur_liste:
+    path:     /liste
+    defaults: { _controller: CineLivreBundle:Auteur:list }
+auteur_update:
+    path:     /update
+    defaults: { _controller: CineLivreBundle:Auteur:update }

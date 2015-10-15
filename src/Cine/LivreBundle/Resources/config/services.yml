@@ -1,0 +1,4 @@
+services:
+#    cine_livre.example:
+#        class: Cine\LivreBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
