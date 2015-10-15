@@ -1,0 +1,12 @@
+cine_livre:
+    resource: "@CineLivreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+lc_test:
+    resource: "@LCTestBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
