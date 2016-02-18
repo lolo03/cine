@@ -13,3 +13,12 @@ auteur_liste:
 auteur_update:
     path:     /update
     defaults: { _controller: CineLivreBundle:Auteur:update }
+editeur_liste:
+    path:     /editeur
+    defaults: { _controller: CineLivreBundle:Editeur:index }
+editeur_liste2:
+    path:     /editeur2
+    defaults: { _controller: CineLivreBundle:Editeur:index2 }
+editeur_ajout:
+    path:     /editeur/ajout
+    defaults: { _controller: CineLivreBundle:Editeur:ajouter }

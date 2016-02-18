@@ -31,6 +31,27 @@ class Editeur
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=true)
+     */
+    private $pays;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="web", type="string", length=255, nullable=true)
+     */
+    private $web;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -76,4 +97,73 @@ class Editeur
         return $this;
     }
 
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     * @return Editeur
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string 
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     * @return Editeur
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string 
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Set web
+     *
+     * @param string $web
+     * @return Editeur
+     */
+    public function setWeb($web)
+    {
+        $this->web = $web;
+
+        return $this;
+    }
+
+    /**
+     * Get web
+     *
+     * @return string 
+     */
+    public function getWeb()
+    {
+        return $this->web;
+    }
 }
