@@ -1,0 +1,33 @@
+<?php
+
+namespace W3C\AccountsBundle\DataFixtures\ORM;
+
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\Persistence\ObjectManager;
+use W3C\AccountsBundle\Entity\Email;
+use W3C\AccountsBundle\Entity\User;
+
+class UsersData extends AbstractFixture
+{
+    public function load(ObjectManager $manager)
+    {
+        $user = new User('given1', 'family1', 'login1');
+        $user->setPassword("frmw3hal/BVcU"); // "password"
+        $email = new Email("denis+login1@w3.org", "Professional", "valid");
+        $user->addEmail($email);
+        $email1 = new Email("denis.ahkang+login1@gmail.com", "Personal", "valid");
+        $user->addEmail($email1);
+        $manager->persist($user);
+        $this->addReference('user1', $user);
+
+        $user2 = new User('given2', 'family2', 'login2');
+        $user2->setPassword("frmw3hal/BVcU"); // "password"
+        $email2 = new Email("denis+login2@w3.org", "Professional", "valid");
+        $user2->addEmail($email2);
+        $manager->persist($user2);
+        $this->addReference('user2', $user2);
+
+        $manager->flush();
+    }
+
+}

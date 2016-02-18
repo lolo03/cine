@@ -1,0 +1,6 @@
+{% extends "CineLivreBundle::cine.html.twig" %}
+
+{% block content %}
+<p>coucou <b>{{ nom }}</b></p>
+<p>bListe des éditeurs></p>
+{% endblock content %}

@@ -1,0 +1,639 @@
+SET NAMES UTF8;
+SET foreign_key_checks=0;
+
+TRUNCATE TABLE `hierarchy`;
+TRUNCATE TABLE `recoverAccount`;
+TRUNCATE TABLE `accountRequests`;
+TRUNCATE TABLE `pendingRequests`;
+TRUNCATE TABLE `pendingOrganizations`;
+TRUNCATE TABLE `affiliationChangeRequests`;
+TRUNCATE TABLE `corporateEmailDNS`;
+TRUNCATE TABLE `contracts`;
+TRUNCATE TABLE `organizations`;
+TRUNCATE TABLE `organizationType`;
+TRUNCATE TABLE `affiliations`;
+TRUNCATE TABLE `wgDetails`;
+TRUNCATE TABLE `activities`;
+TRUNCATE TABLE `domains`;
+TRUNCATE TABLE `groupDetails`;
+TRUNCATE TABLE `emails`;
+TRUNCATE TABLE `links`;
+TRUNCATE TABLE `phones`;
+TRUNCATE TABLE `phoneType`;
+TRUNCATE TABLE `postal`;
+TRUNCATE TABLE `userDetails`;
+TRUNCATE TABLE `photos`;
+TRUNCATE TABLE `ids`;
+TRUNCATE TABLE `ppParticipation`;
+TRUNCATE TABLE `ppLog`;
+TRUNCATE TABLE `memberTierDescriptions`;
+TRUNCATE TABLE `memberNotes`;
+TRUNCATE TABLE `countries`;
+TRUNCATE TABLE `offices`;
+TRUNCATE TABLE `defaultlog`;
+TRUNCATE TABLE `contractClasses`;
+
+SET foreign_key_checks=1;
+
+LOCK TABLES `offices` WRITE;
+INSERT INTO `offices` (id, name, createDate, email) VALUES 
+(1,'Australia','2000-06-08','w3c-australia@w3.org'),
+(2,'Finland','2002-06-01','w3c-finland@w3.org'),
+(3,'Germany and Austria','1998-01-01','w3c-germany@w3.org'),
+(4,'Greece','1998-01-01','w3c-greece@w3.org'),
+(5,'Hong Kong SAR, China','1998-10-01','w3c-hongkong@w3.org'),
+(6,'Hungary','2002-04-01','w3c-hungary@w3.org'),
+(7,'Israel','2000-01-01','w3c-israel@w3.org'),
+(8,'Italy','1998-01-01','w3c-italy@w3.org'),
+(9,'Korea','2002-03-01','w3c-korea@w3.org'),
+(10,'Benelux','1998-01-01','w3c-benelux@w3.org'),
+(11,'Spain','2003-10-01','w3c-spain@w3.org'),
+(12,'Sweden','1998-01-01','w3c-sweden@w3.org'),
+(13,'United Kingdom and Ireland','1998-01-01','w3c-uk@w3.org'),
+(14,'Morocco','2001-01-01','w3c-morocco@w3.org'),
+(15,'Israel-US','2000-01-01','w3c-israel@w3.org'),
+(16,'India','2005-07-01','w3c-india@w3.org'),
+(17,'China','2006-04-01','w3c-china@w3.org'),
+(18,'Southern Africa','2007-04-24','w3c-safrica@w3.org'),
+(19,'Brazil','2007-10-01','w3c-brazil@w3.org'),
+(20,'Senegal','2009-04-01','w3c-senegal@w3.org'),
+(21,'France','2011-07-01','w3c-france@w3.org'),
+(22,'Russia','2012-02-16','w3c-russia@w3.org');
+
+--
+-- Extracted from:
+-- SELECT CONCAT(id, ", '", countryCode, "', '", worldRegion, "', '", hostname, "', ", officeId, ", ", usesEuVat, ", '", country, "'") FROM countries;
+--
+LOCK TABLES `countries` WRITE;
+INSERT INTO `countries` (countryCode, worldRegion, hostname, officeId, usesEuVat, country) VALUES
+('AU', 'Asia/Pacific', 'MIT', 1, 0, 'Australia'),
+('AT', 'Europe', 'ERCIM', 3, 1, 'Austria'),
+('BE', 'Europe', 'ERCIM', 10, 1, 'Belgium'),
+('CA', 'North America', 'MIT', NULL, 0, 'Canada'),
+('CN', 'Asia/Pacific', 'MIT', 17, 0, 'China'),
+('CO', 'South America', 'MIT', NULL, 0, 'Colombia'),
+('DK', 'Europe', 'ERCIM', NULL, 1, 'Denmark'),
+('FI', 'Europe', 'ERCIM', 2, 1, 'Finland'),
+('FR', 'Europe', 'ERCIM', 21, 1, 'France'),
+('DE', 'Europe', 'ERCIM', 3, 1, 'Germany'),
+('GR', 'Europe', 'ERCIM', 4, 1, 'Greece'),
+('HK', 'Asia/Pacific', 'MIT', 17, 0, 'Hong Kong SAR, China'),
+('HU', 'Europe', 'ERCIM', 6, 1, 'Hungary'),
+('1N', 'Europe', 'ERCIM', NULL, 0, 'International North Atlantic'),
+('IE', 'Europe', 'ERCIM', 13, 1, 'Ireland'),
+('IL', 'Middle East', 'ERCIM', 7, 0, 'Israel'),
+('IT', 'Europe', 'ERCIM', 8, 1, 'Italy'),
+('JP', 'Asia/Pacific', 'KEIO', NULL, 0, 'Japan'),
+('KR', 'Asia/Pacific', 'KEIO', 9, 0, 'Korea'),
+('LU', 'Europe', 'ERCIM', 10, 1, 'Luxembourg'),
+('NL', 'Europe', 'ERCIM', 10, 1, 'Netherlands'),
+('NO', 'Europe', 'ERCIM', NULL, 0, 'Norway'),
+('PL', 'Europe', 'ERCIM', NULL, 1, 'Poland'),
+('RU', 'Europe', 'ERCIM', 22, 0, 'Russia'),
+('SG', 'Asia/Pacific', 'MIT', NULL, 0, 'Singapore'),
+('ES', 'Europe', 'ERCIM', 11, 1, 'Spain'),
+('SE', 'Europe', 'ERCIM', 12, 1, 'Sweden'),
+('CH', 'Europe', 'ERCIM', NULL, 0, 'Switzerland'),
+('TW', 'Asia/Pacific', 'MIT', NULL, 0, 'Taiwan'),
+('GB', 'Europe', 'ERCIM', 13, 1, 'United Kingdom'),
+('US', 'North America', 'MIT', NULL, 0, 'United States'),
+('ZA', 'Africa', 'ERCIM', 18, 0, 'South Africa'),
+('MA', 'Africa', 'ERCIM', 14, 0, 'Morocco'),
+('TN', 'Middle East', 'ERCIM', NULL, 0, 'Tunisia'),
+('JO', 'Europe', 'ERCIM', NULL, 0, 'Jordan'),
+('CZ', 'Europe', 'ERCIM', NULL, 1, 'Czech Republic'),
+('MT', 'Europe', 'ERCIM', NULL, 1, 'Malta'),
+('LK', 'Asia/Pacific', 'MIT', NULL, 0, 'Sri Lanka'),
+('AE', 'Middle East', 'ERCIM', NULL, 0, 'United Arab Emirates'),
+('AF', 'Central Asia', 'MIT', NULL, 0, 'Afghanistan'),
+('AL', 'Europe', 'ERCIM', NULL, 0, 'Albania'),
+('DZ', 'Africa', 'ERCIM', NULL, 0, 'Algeria'),
+('AS', 'Asia/Pacific', 'MIT', NULL, 0, 'American Samoa'),
+('AD', 'Europe', 'ERCIM', NULL, 0, 'Andorra'),
+('AO', 'Africa', 'ERCIM', NULL, 0, 'Angola'),
+('AG', 'Carribean', 'MIT', NULL, 0, 'Antigua and Barbuda'),
+('AR', 'South America', 'MIT', NULL, 0, 'Argentina'),
+('AM', 'Central Asia', 'ERCIM', NULL, 0, 'Armenia'),
+('AW', 'Carribean', 'MIT', NULL, 0, 'Aruba'),
+('AZ', 'Central Asia', 'ERCIM', NULL, 0, 'Azerbaijan'),
+('BS', 'Carribean', 'MIT', NULL, 0, 'Bahamas, The'),
+('BH', 'Middle East', 'ERCIM', NULL, 0, 'Bahrain'),
+('BD', 'Central Asia', 'MIT', NULL, 0, 'Bangladesh'),
+('BB', 'Carribean', 'MIT', NULL, 0, 'Barbados'),
+('BY', 'Europe', 'ERCIM', NULL, 0, 'Belarus'),
+('BZ', 'Central America', 'MIT', NULL, 0, 'Belize'),
+('BJ', 'Africa', 'ERCIM', NULL, 0, 'Benin'),
+('BM', 'Carribean', 'MIT', NULL, 0, 'Bermuda'),
+('BT', 'Central Asia', 'MIT', NULL, 0, 'Bhutan'),
+('BO', 'South America', 'MIT', NULL, 0, 'Bolivia'),
+('BA', 'Europe', 'ERCIM', NULL, 0, 'Bosnia and Herzegovina'),
+('BW', 'Africa', 'ERCIM', NULL, 0, 'Botswana'),
+('BR', 'South America', 'MIT', 19, 0, 'Brazil'),
+('BN', 'Asia/Pacific', 'MIT', NULL, 0, 'Brunei Darussalam'),
+('BG', 'Europe', 'ERCIM', NULL, 1, 'Bulgaria'),
+('BF', 'Africa', 'ERCIM', NULL, 0, 'Burkina Faso'),
+('BI', 'Africa', 'ERCIM', NULL, 0, 'Burundi'),
+('KH', 'Asia/Pacific', 'MIT', NULL, 0, 'Cambodia'),
+('CM', 'Africa', 'ERCIM', NULL, 0, 'Cameroon'),
+('CV', 'Africa', 'ERCIM', NULL, 0, 'Cape Verde'),
+('KY', 'Carribean', 'MIT', NULL, 0, 'Cayman Islands'),
+('CF', 'Africa', 'ERCIM', NULL, 0, 'Central African Republic'),
+('TD', 'Africa', 'ERCIM', NULL, 0, 'Chad'),
+('CL', 'South America', 'MIT', NULL, 0, 'Chile'),
+('KM', 'Africa', 'ERCIM', NULL, 0, 'Comoros'),
+('CD', 'Africa', 'ERCIM', NULL, 0, 'Congo, Rep.'),
+('CR', 'Central America', 'MIT', NULL, 0, 'Costa Rica'),
+('CI', 'Africa', 'ERCIM', NULL, 0, 'Cote d\'Ivoire'),
+('HR', 'Europe', 'ERCIM', NULL, 0, 'Croatia'),
+('CU', 'Carribean', 'MIT', NULL, 0, 'Cuba'),
+('CY', 'Europe', 'ERCIM', NULL, 1, 'Cyprus'),
+('DJ', 'Africa', 'ERCIM', NULL, 0, 'Djibouti'),
+('DM', 'Carribean', 'MIT', NULL, 0, 'Dominica'),
+('DO', 'Carribean', 'MIT', NULL, 0, 'Dominican Republic'),
+('EC', 'South America', 'MIT', NULL, 0, 'Ecuador'),
+('EG', 'Africa', 'ERCIM', NULL, 0, 'Egypt, Arab Rep.'),
+('SV', 'Central America', 'MIT', NULL, 0, 'El Salvador'),
+('GQ', 'Africa', 'ERCIM', NULL, 0, 'Equatorial Guinea'),
+('ER', 'Africa', 'ERCIM', NULL, 0, 'Eritrea'),
+('EE', 'Europe', 'ERCIM', NULL, 1, 'Estonia'),
+('ET', 'Africa', 'ERCIM', NULL, 0, 'Ethiopia'),
+('FO', 'Europe', 'ERCIM', NULL, 0, 'Faeroe Islands'),
+('FJ', 'Asia/Pacific', 'MIT', NULL, 0, 'Fiji'),
+('PF', 'Asia/Pacific', 'MIT', NULL, 0, 'French Polynesia'),
+('GA', 'Africa', 'ERCIM', NULL, 0, 'Gabon'),
+('GM', 'Africa', 'ERCIM', NULL, 0, 'Gambia, The'),
+('GE', 'Central Asia', 'ERCIM', NULL, 0, 'Georgia'),
+('GH', 'Africa', 'ERCIM', NULL, 0, 'Ghana'),
+('GL', 'Europe', 'MIT', NULL, 0, 'Greenland'),
+('GD', 'Carribean', 'MIT', NULL, 0, 'Grenada'),
+('GU', 'Asia/Pacific', 'MIT', NULL, 0, 'Guam'),
+('GT', 'Central America', 'MIT', NULL, 0, 'Guatemala'),
+('GN', 'Africa', 'ERCIM', NULL, 0, 'Guinea'),
+('GW', 'Africa', 'ERCIM', NULL, 0, 'Guinea-Bissau'),
+('GY', 'South America', 'MIT', NULL, 0, 'Guyana'),
+('HT', 'Carribean', 'MIT', NULL, 0, 'Haiti'),
+('HN', 'Central America', 'MIT', NULL, 0, 'Honduras'),
+('IS', 'Europe', 'ERCIM', NULL, 0, 'Iceland'),
+('IN', 'Central Asia', 'MIT', 16, 0, 'India'),
+('ID', 'Asia/Pacific', 'MIT', NULL, 0, 'Indonesia'),
+('IR', 'Middle East', 'ERCIM', NULL, 0, 'Iran, Islamic Rep.'),
+('IQ', 'Middle East', 'ERCIM', NULL, 0, 'Iraq'),
+('JM', 'Carribean', 'MIT', NULL, 0, 'Jamaica'),
+('KZ', 'Central Asia', 'MIT', NULL, 0, 'Kazakhstan'),
+('KE', 'Africa', 'ERCIM', NULL, 0, 'Kenya'),
+('KI', 'Asia/Pacific', 'MIT', NULL, 0, 'Kiribati'),
+('KP', 'Asia/Pacific', 'KEIO', 9, 0, 'Korea, Dem. Rep.'),
+('KW', 'Middle East', 'ERCIM', NULL, 0, 'Kuwait'),
+('KG', 'Central Asia', 'MIT', NULL, 0, 'Kyrgyz Republic'),
+('LA', 'Asia/Pacific', 'MIT', NULL, 0, 'Lao PDR'),
+('LV', 'Europe', 'ERCIM', NULL, 1, 'Latvia'),
+('LB', 'Middle East', 'ERCIM', NULL, 0, 'Lebanon'),
+('LS', 'Africa', 'ERCIM', NULL, 0, 'Lesotho'),
+('LR', 'Africa', 'ERCIM', NULL, 0, 'Liberia'),
+('LY', 'Africa', 'ERCIM', NULL, 0, 'Libya'),
+('LI', 'Europe', 'ERCIM', NULL, 0, 'Liechtenstein'),
+('LT', 'Europe', 'ERCIM', NULL, 1, 'Lithuania'),
+('MO', 'Asia/Pacific', 'MIT', NULL, 0, 'Macao, China'),
+('MK', 'Europe', 'ERCIM', NULL, 0, 'Macedonia, FYR'),
+('MG', 'Africa', 'ERCIM', NULL, 0, 'Madagascar'),
+('MW', 'Africa', 'ERCIM', NULL, 0, 'Malawi'),
+('MY', 'Asia/Pacific', 'MIT', NULL, 0, 'Malaysia'),
+('MV', 'Asia/Pacific', 'MIT', NULL, 0, 'Maldives'),
+('ML', 'Africa', 'ERCIM', NULL, 0, 'Mali'),
+('MH', 'Asia/Pacific', 'MIT', NULL, 0, 'Marshall Islands'),
+('MR', 'Africa', 'ERCIM', NULL, 0, 'Mauritania'),
+('MU', 'Africa', 'ERCIM', NULL, 0, 'Mauritius'),
+('YT', 'Africa', 'ERCIM', NULL, 0, 'Mayotte'),
+('MX', 'North America', 'MIT', NULL, 0, 'Mexico'),
+('FM', 'Asia/Pacific', 'MIT', NULL, 0, 'Micronesia, Fed. Sts.'),
+('MD', 'Europe', 'ERCIM', NULL, 0, 'Moldova'),
+('MC', 'Europe', 'ERCIM', NULL, 1, 'Monaco'),
+('MN', 'Asia/Pacific', 'MIT', NULL, 0, 'Mongolia'),
+('MZ', 'Africa', 'ERCIM', NULL, 0, 'Mozambique'),
+('MM', 'Asia/Pacific', 'MIT', NULL, 0, 'Myanmar'),
+('NA', 'Africa', 'ERCIM', NULL, 0, 'Namibia'),
+('NP', 'Central Asia', 'MIT', NULL, 0, 'Nepal'),
+('AN', 'Carribean', 'MIT', NULL, 0, 'Netherlands Antilles'),
+('NC', 'Asia/Pacific', 'MIT', NULL, 0, 'New Caledonia'),
+('NZ', 'Asia/Pacific', 'MIT', NULL, 0, 'New Zealand'),
+('NI', 'Central America', 'MIT', NULL, 0, 'Nicaragua'),
+('NE', 'Africa', 'ERCIM', NULL, 0, 'Niger'),
+('NG', 'Africa', 'ERCIM', NULL, 0, 'Nigeria'),
+('MP', 'Asia/Pacific', 'MIT', NULL, 0, 'Northern Mariana Islands'),
+('OM', 'Middle East', 'ERCIM', NULL, 0, 'Oman'),
+('PK', 'Central Asia', 'MIT', NULL, 0, 'Pakistan'),
+('PW', 'Asia/Pacific', 'MIT', NULL, 0, 'Palau'),
+('PA', 'Central America', 'MIT', NULL, 0, 'Panama'),
+('PG', 'Asia/Pacific', 'MIT', NULL, 0, 'Papua New Guinea'),
+('PY', 'South America', 'MIT', NULL, 0, 'Paraguay'),
+('PE', 'South America', 'MIT', NULL, 0, 'Peru'),
+('PH', 'Asia/Pacific', 'MIT', NULL, 0, 'Philippines'),
+('PT', 'Europe', 'ERCIM', NULL, 1, 'Portugal'),
+('PR', 'Carribean', 'MIT', NULL, 0, 'Puerto Rico'),
+('QA', 'Middle East', 'ERCIM', NULL, 0, 'Qatar'),
+('RO', 'Europe', 'ERCIM', NULL, 1, 'Romania'),
+('RW', 'Africa', 'ERCIM', NULL, 0, 'Rwanda'),
+('WS', 'Asia/Pacific', 'MIT', NULL, 0, 'Samoa'),
+('SM', 'Europe', 'ERCIM', NULL, 0, 'San Marino'),
+('ST', 'Africa', 'ERCIM', NULL, 0, 'Sao Tome and Principe'),
+('SA', 'Middle East', 'ERCIM', NULL, 0, 'Saudi Arabia'),
+('SN', 'Africa', 'ERCIM', 20, 0, 'Senegal'),
+('SC', 'Africa', 'ERCIM', NULL, 0, 'Seychelles'),
+('SL', 'Africa', 'ERCIM', NULL, 0, 'Sierra Leone'),
+('SK', 'Europe', 'ERCIM', NULL, 1, 'Slovak Republic'),
+('SI', 'Europe', 'ERCIM', NULL, 1, 'Slovenia'),
+('SB', 'Asia/Pacific', 'MIT', NULL, 0, 'Solomon Islands'),
+('SO', 'Africa', 'ERCIM', NULL, 0, 'Somalia'),
+('KN', 'Carribean', 'MIT', NULL, 0, 'St. Kitts and Nevis'),
+('LC', 'Carribean', 'MIT', NULL, 0, 'St. Lucia'),
+('VC', 'Carribean', 'MIT', NULL, 0, 'St. Vincent and the Grenadines'),
+('SD', 'Africa', 'ERCIM', NULL, 0, 'Sudan'),
+('SR', 'South America', 'MIT', NULL, 0, 'Suriname'),
+('SZ', 'Africa', 'ERCIM', NULL, 0, 'Swaziland'),
+('SY', 'Middle East', 'ERCIM', NULL, 0, 'Syrian Arab Republic'),
+('TJ', 'Central Asia', 'MIT', NULL, 0, 'Tajikistan'),
+('TZ', 'Africa', 'ERCIM', NULL, 0, 'Tanzania'),
+('TH', 'Asia/Pacific', 'MIT', NULL, 0, 'Thailand'),
+('TL', 'Asia/Pacific', 'MIT', NULL, 0, 'Timor-Leste'),
+('TG', 'Africa', 'ERCIM', NULL, 0, 'Togo'),
+('TO', 'Asia/Pacific', 'MIT', NULL, 0, 'Tonga'),
+('TT', 'Carribean', 'MIT', NULL, 0, 'Trinidad and Tobago'),
+('TR', 'Europe', 'ERCIM', NULL, 0, 'Turkey'),
+('TM', 'Central Asia', 'ERCIM', NULL, 0, 'Turkmenistan'),
+('UG', 'Africa', 'ERCIM', NULL, 0, 'Uganda'),
+('UA', 'Europe', 'ERCIM', NULL, 0, 'Ukraine'),
+('UY', 'South America', 'MIT', NULL, 0, 'Uruguay'),
+('UZ', 'Central Asia', 'MIT', NULL, 0, 'Uzbekistan'),
+('VU', 'Asia/Pacific', 'MIT', NULL, 0, 'Vanuatu'),
+('VE', 'South America', 'MIT', NULL, 0, 'Venezuela, RB'),
+('VN', 'Asia/Pacific', 'MIT', NULL, 0, 'Vietnam'),
+('VI', 'Carribean', 'MIT', NULL, 0, 'Virgin Islands (U.S.)'),
+('YE', 'Middle East', 'ERCIM', NULL, 0, 'Yemen, Rep.'),
+('ZM', 'Africa', 'ERCIM', NULL, 0, 'Zambia'),
+('ZW', 'Africa', 'ERCIM', NULL, 0, 'Zimbabwe'),
+('CG', 'Africa', 'ERCIM', NULL, 0, 'Congo'),
+('PS', 'Middle East', 'ERCIM', NULL, 0, 'Palestinian Territory'),
+('VA', 'Central Asia', 'ERCIM', NULL, 0, 'Vatican'),
+('AI', 'Carribean', 'MIT', 13, 0, 'Anguilla'),
+('RS', 'Europe', 'ERCIM', NULL, 0, 'Serbia'),
+('ME', 'Europe', 'ERCIM', NULL, 0, 'Montenegro'),
+('TV', 'Asia/Pacific', 'MIT', NULL, 0, 'Tuvalu'),
+('SS', 'Africa', 'ERCIM', NULL, 0, 'South Sudan');
+
+LOCK TABLES `phoneType` WRITE;
+INSERT INTO `phoneType` (id,name,regex,uriprefix,example) VALUES
+(1,'Phone','/^\\+([1-9]\\d?\\d?[-.])(\\d+[-.])*\\d+$/','tel:', '+1.555.123.1234'),
+(2,'Mobile Phone','/^\\+([1-9]\\d?\\d?[-.])(\\d+[-.])*\\d+$/','tel:', '+1.555.123.1234'),
+(3,'Fax','/^\\+([1-9]\\d?\\d?[-.])(\\d+[-.])*\\d+$/','fax:', '+1.555.123.1234'),
+(4,'Skype','/^[a-zA-Z][-_.,a-zA-Z0-9]{5,31}$/','skype:', 'john.doe'),
+(5,'SIP','/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$/','sip:', 'john@example.com'),
+(6,'Other','/.*/',NULL,NULL);
+
+LOCK TABLES `ids` WRITE;
+INSERT INTO `ids` (id, stops, discr, value, type, created) VALUES
+(102,0,'w3cgroup','w3cteamgroup','G',NOW()),
+(105,0,'group','w3cmembergroup','G',NOW()),
+(106,0,'group','w3t_passwords','G',NOW()),
+(109,0,'domain','w3t_webteam','G',NOW()),
+(111,0,'w3cgroup','W3T_KEIO','G',NOW()),
+(112,0,'w3cgroup','W3T_INRIA','G',NOW()),
+(114,0,'w3cgroup','W3T_MIT','G',NOW()),
+(34287,0,'domain','w3m','G',NOW()),
+(36332,0,'domain','commteam','G',NOW()),
+(41381,0,'domain','ubiwebdomain','G',NOW()),
+(41481,0,'domain','interactiondomainteam','G',NOW()),
+(42827,0,'domain','waidomainteam','G',NOW()),
+(46188,0,'domain','technologysocietydomain','G',NOW()),
+(53408,0,'domain','businessdevelopmentteam','G',NOW()),
+(56330,0,'domain','administration','G',NOW()),
+(68257,0,'domain','ink','G',NOW()),
+(11537,0,'user','ted','U',NOW()),
+(16289,0,'user','dom','U',NOW()),
+(21600,0,'user','lcarcone','U',NOW()),
+(34410,0,'user','vivien','U',NOW()),
+(39441,0,'user','jean-gui','U',NOW()),
+(47336,0,'user','denis','U',NOW()),
+(63888,0,'user','astorije','U',NOW()),
+(116,0,'affiliation','w3c_invited_experts','G',NOW()),
+(36747,0,'affiliation','public_invitedexperts','G',NOW()),
+(52794,0,'affiliation','w3cstaff','G',NOW()),
+(54127,0,'group','domains','G',NOW()),
+(1016,1,'organization','verity','G',NOW()),
+(32061,'0','w3cgroup','csswg','G',NOW()),
+(7756,'0','w3cgroup','ab','G',NOW()),
+(31972,'0','w3cgroup','chairs','G',NOW()),
+(47956,'0','w3cgroup','odrl','G',NOW()),
+(33280,0,'w3cgroup','w3cAdvisoryReps','G',NOW()),
+(36654,0,'w3cgroup','p3pworkinggroup','G',NOW()),
+(49726,0,'w3cgroup','games','G',NOW()),
+(61499,0,'w3cgroup','W3T_BEIHANG','G',NOW());
+
+LOCK TABLES `userDetails` WRITE;
+INSERT INTO `userDetails` (id, given, family, position, birthdate, biography, notes, passwd, preferredEmail, preferredPhone, preferredAddress, photo, emailPattern) VALUES
+(11537, 'Ted', 'Guild','Head of Systems Team','1968-11-29','<p>Ted joined the W3C in January of 2000.  He comes to the
+Consortium from the corporate IT community having worked for a
+mortgage and investment company, a power utility, an internet service
+provider, and a marketing and communications company.  He earned a
+bachelors in Russian from Hobart College.  He also spent some time
+as an English as a Second Language and Mathematics instructor.</p>',NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,'^(From: .*Guild|Message-I[Dd]: <.*@(dev-NULL\\.guilds\\.net|.*w3\\.org)>)'),
+(16289, 'Dominique', 'Hazaël-Massieux',NULL,'1977-04-22','<p><a href="/People/Dom/">Dominique</a> is the Activity Lead of the <a href="/Mobile/">Mobile Web Initiative</a>, serves as staff contact in the <a href="http://www.w3.org/2009/dap/">Device APIs and Policy Working Group</a>, and develops tools and applications as part of the W3C <a href="/blog/systeam">Systems Team</a>.</p>
+
+<p>He joined initially W3C’s Communication and Systems Team as a member of the Webmaster Team in October 2000; after having joined then lead the <a href="/QA/Activity">QA Activity</a> until September 2005, Dom took part to the <a href="/2005/MWI/">Mobile Web Initiative</a> as Staff Contact for the <a href="/2005/MWI/BPWG/">Best Practices Working Group</a> and later as co-Chair of the <a href="/2005/MWI/Tests/">Mobile Web Test Suites Working Group</a>.</p>
+
+<p>Dominique holds an engineering degree from the “Grande Ecole” <a href="http://www.ecp.fr">École Centrale Paris</a>.</p>',NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,NULL),
+(21600, 'Laurent', 'Carcone',NULL,'1964-06-29','<p>Laurent joined the W3C team at Inria-Grenoble in September 2000
+ to participate in the development of Amaya. Before joining the W3C,
+ he worked as an engineer in the WAM project at Inria-Grenoble.</p>
+<p>Laurent hold an enineering degree in computer science from the CNAM
+Grenoble (Conservatoire National des Arts et Métiers) in 1997.</p>',NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,NULL),
+(34410, 'Vivien', 'Lacourba','System & Network Engineer','1980-08-19','<p>
+Vivien joined W3C in May 2003 as the W3C Webmaster at the <a
+href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr>/<abbr title="Computer Science and Artificial Intelligence Laboratory">CSAIL</abbr></a> host site in Cambridge, MA USA.
+</p>
+<p>
+Since September 2004 Vivien is working as a Systems &amp; Network Engineer for W3C Europe at the <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a> host site in Sophia-Antipolis, France.
+</p>
+<p>
+Vivien graduated in September 2003 from the <a href="http://www.essi.fr/">Ecole Supérieure en Sciences Informatiques</a> in Sophia-Antipolis, France.<br/> He holds an engineering degree in Computer Science, specializing in Networks. In June 2000, he received a two year degree in Computer Programming at the <a href="http://www.univ-lyon1.fr/">University of Lyon</a>, France.
+</p>',NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,NULL),
+(39441, 'Jean-Guilhem', 'Rouel','Systems Team','1983-07-09','<p>
+<a href="http://www.w3.org/People/Jean-Gui/">Jean-Guilhem</a> joined the W3C Systems Team in August 2006 as the W3C Webmaster at the <a
+href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr>/<abbr title="Computer Science and Artificial Intelligence Laboratory">CSAIL</abbr></a> host site in Cambridge, MA USA.
+</p>
+<p>
+He graduated in October 2006 from <a href="http://www.polytech.unice.fr/informatique">Polytech’Nice-Sophia Computer Science Department</a> (formerly known as ESSI: Ecole Supérieure en Sciences Informatiques) specialized in Networks.
+</p>
+<p>
+In September 2003 he received a two year degree in Mathematics and Computer Science (DEUG MIAS) at the <a href="http://www.univ-jfc.fr/">University Jean-François Champollion</a> in Albi, France.
+</p>',NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,NULL),
+(47336, 'Denis', 'Ah-Kang','(Former) W3C Webmaster','1983-08-28',NULL,NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,NULL),
+(63888, 'Jérémie', 'Astori','W3C Webmaster','1988-10-08',NULL,NULL,'frmw3hal/BVcU',NULL,NULL,NULL,NULL,NULL);
+
+LOCK TABLES `postal` WRITE;
+INSERT INTO `postal` (id, idsId, address, city, postalCode, state, countryCode, label) VALUES
+(1, 11537,'PO Box 3','Cumberland','04021-0003','ME','US','Personal'),
+(2, 21600,'W3C/ERCIM\n2004 Route des Lucioles\nSophia Antipolis','Biot','06410',NULL,'FR','Professional'),
+(3, 34410,'W3C/ERCIM\n2004 Route des Lucioles\nSophia Antipolis','Biot','06410',NULL,'FR','Professional'),
+(4, 34410,'6 rue de la petite colline','Mougins','06250',NULL,'FR','Personal'),
+(5, 39441,'W3C/ERCIM\n2004 Route des Lucioles\nSophia-Antipolis','Biot','06410',NULL,'FR','Professional'),
+(7, 47336,'W3C MIT/CSAIL\n32 Vassar Stret\nBuilding 32-G504','Cambridge','02139','MA','US','Professional'),
+(8, 1016,'Verity\n1234 Main Street','Boston','02139','MA','US','Headquarters'),
+(9, 63888,'W3C MIT/CSAIL\n32 Vassar Stret\nBuilding 32-G504','Cambridge','02139','MA','US','Professional');
+
+LOCK TABLES `emails` WRITE;
+INSERT INTO `emails` (id, value, owner, label, nonce, expirationDate, status) VALUES
+(274387,'tguild@earthlink.net',11537,'Personal',NULL,NULL,'valid'),
+(140876,'ted@w3.org',11537,'Professional',NULL,NULL,'valid'),
+(166293,'laurent@w3.org',21600,'Professional',NULL,NULL,'valid'),
+(285832,'vivien@w3.org',34410,'Professional',NULL,NULL,'valid'),
+(285833,'dom@w3.org',16289,'Professional',NULL,NULL,'valid'),
+(317867,'vivien@doky.org',34410,'Personal',NULL,NULL,'valid'),
+(1105654,'zereaper@troulite.fr',39441,'Personal',NULL,NULL,'valid'),
+(1044007,'jean-gui@w3.org',39441,'Professional',NULL,NULL,'valid'),
+(4782226,'denis@w3.org',47336,'Professional',NULL,NULL,'valid'),
+(4782227,'denis+test1@w3.org',47336,'Professional',NULL,NULL,'valid'),
+(4782228,'denis+test2@w3.org',47336,'Professional',NULL,NULL,'valid'),
+(5277414,'denis@ahkang.fr',47336,'Personal','randomnonce','2013-12-31 12:00:00', 'new'),
+(6000000,'jeremie@w3.org',63888,'Professional',NULL,NULL,'valid');
+
+LOCK TABLES `links` WRITE;
+INSERT INTO `links` (id, value, owner, label) VALUES
+(1001,'http://guild.net/',11537,'Homepage'),
+(1002,'http://www.w3.org/',11537,'Work'),
+(1003,'http://www.w3.org/',34410,'Work'),
+(1004,'http://www.doky.org/',34410,'Homepage'),
+(1005,'http://www.w3.org/People/Vivien/',34410,'People page'),
+(1006,'http://www.w3.org/Team/Vivien/',34410,'Team page'),
+(1007,'http://www.troulite.org/',39441,'Homepage'),
+(1008,'http://www.ahkang.fr/',47336,'Homepage'),
+(2001,'http://www.w3.org/Team/',102,'Homepage'),
+(2002,'http://www.w3.org/Systems/',109,'Homepage'),
+(2003,'http://www.w3.org/Style/CSS/members',32061,'Homepage'),
+(2004,'http://www.w3.org/Member/Board/',7756,'Homepage'),
+(2005,'http://www.w3.org/Guide/',31972,'Homepage'),
+(2006,'http://www.w3.org/community/odrl/',47956,'Homepage'),
+(2007,'http://www.w3.org/2003/01/ERCIMT/',112,'Homepage');
+
+LOCK TABLES `phones` WRITE;
+INSERT INTO `phones` (id, idsId, phone, type, label) VALUES
+(1, 34410,'+33.4.92.38.78.89',1,'Professional'),
+(2, 34410,'+33.4.92.38.78.22',3,'Professional'),
+(3, 34410,'+33.9.53.19.08.80',1,'Personal'),
+(4, 34410,'+33.6.84.00.23.06',2,'Personal'),
+(5, 34410,'vivien.lacourba',4,'Personal'),
+(6, 39441,'+33.4.92.38.79.54',1,'Professional'),
+(7, 39441,'+33.6.18.96.70.47',2,'Personal'),
+(8, 39441,'+99.99.99.99.99',1,'Iridium satellite phone'),
+(9, 39441,'blah blah',6,'Other');
+
+LOCK TABLES `userDetails` WRITE;
+UPDATE userDetails SET preferredEmail=140876 WHERE id=11537;
+UPDATE userDetails SET preferredEmail=166293 WHERE id=21600;
+UPDATE userDetails SET preferredEmail=285832 WHERE id=34410;
+UPDATE userDetails SET preferredEmail=285833 WHERE id=16289;
+UPDATE userDetails SET preferredEmail=1044007 WHERE id=39441;
+UPDATE userDetails SET preferredEmail=4782226 WHERE id=47336;
+UPDATE userDetails SET preferredEmail=6000000 WHERE id=63888;
+
+UPDATE userDetails SET preferredPhone=1 WHERE id=34410;
+UPDATE userDetails SET preferredPhone=6 WHERE id=39441;
+
+UPDATE userDetails SET preferredAddress=1 WHERE id=11537;
+UPDATE userDetails SET preferredAddress=2 WHERE id=21600;
+UPDATE userDetails SET preferredAddress=3 WHERE id=34410;
+UPDATE userDetails SET preferredAddress=5 WHERE id=39441;
+UPDATE userDetails SET preferredAddress=7 WHERE id=47336;
+UPDATE userDetails SET preferredAddress=9 WHERE id=63888;
+
+LOCK TABLES `groupDetails` WRITE;
+INSERT INTO `groupDetails` (id, name, alphaname, shortname, homepage, type) VALUES
+(102,'Team','W3C Team','w3t',2001,'G'),
+(105,'W3C Members','W3C Members',NULL,NULL,'G'),
+(106,'w3t_passwords','Team access',NULL,NULL,'G'),
+(109,'Systems','Systems','systeam',2002,'G'),
+(111,'W3C/Keio','W3C/Keio','w3c-keio',NULL,'G'),
+(112,'W3C/ERCIM','W3C/ERCIM','w3c-ercim',2007,'G'),
+(114,'W3C/MIT','W3C/MIT','w3c-mit',NULL,'G'),
+(116,'W3C Invited Experts','W3C Invited Experts',NULL,NULL,'G'),
+(36747,'Invited Experts without Member Access','Invited Experts without Member Access',NULL,NULL,'G'),
+(34287,'Management','Management','w3m', NULL,'W'),
+(36332,'Marketing & Communications','Marketing & Communications','comm', NULL,'G'),
+(41381,'Ubiquitous Web','Ubiquitous Web','ubiquitous', NULL,'W'),
+(41481,'Interaction','Interaction','interaction', NULL,'W'),
+(42827,'Web Accessibility Initiative','Web Accessibility Initiative','wai', NULL,'W'),
+(46188,'Technology & Society','Technology & Society','tands', NULL,'W'),
+(53408,'Business Development','Business Development','bizdev', NULL,'W'),
+(56330,'Administration','Administration','admin', NULL,'W'),
+(1016,'Verity, Inc.','Verity, Inc.','verity',NULL,'O'),
+(52794,'W3C Staff','W3C Staff','w3cstaff',NULL,'G'),
+(54127,'W3C Domains','W3C Domains','domains',NULL,'G'),
+(32061,'Cascading Style Sheets (CSS) Working Group','Cascading Style Sheets (CSS) Working Group','css',2003,'W'),
+(7756,'Advisory Board','Advisory Board','ab',2004,'G'),
+(31972,'Chairs','Chairs','chairs',2005,'W'),
+(47956,'ODRL Community Group','ODRL Community Group','odrl',2006,NULL),
+(36654,'P3P Specification Working Group','P3P Specification Working Group','p3pworkinggroup',NULL,'W'),
+(49726,'Games Community Group','Games Community Group','games',NULL,NULL),
+(33280,'Advisory Committee','Advisory Committee','ac',NULL,'W'),
+(61499,'W3C/Beihang','W3C/Beihang','w3c-beihang',NULL,'G'),
+(68257,'Information and Knowledge','Information and Knowledge','ink',NULL,'W');
+
+LOCK TABLES `affiliations` WRITE;
+INSERT INTO `affiliations` (id) VALUES
+(116),
+(36747),
+(52794),
+(1016);
+
+LOCK TABLES `organizationType` WRITE;
+INSERT INTO `organizationType` (id, name) VALUES
+(1, 'Advocacy Group'),
+(2, 'Computer Hardware/Electronics'),
+(3, 'Consultants/Systems Integrators'),
+(4, 'Consumer Goods'),
+(5, 'Content Provider'),
+(6, 'Financial Services'),
+(7, 'Government/Agencies'),
+(9, 'Hardware/Software'),
+(10, 'Health Care/Life Sciences'),
+(11, 'Industrial Manufacturing'),
+(12, 'Information Technology Systems'),
+(13, 'Internet Services'),
+(14, 'Member/Trade Organization'),
+(15, 'News Media/Entertainment'),
+(16, 'Other Business'),
+(17, 'Private R&D'),
+(18, 'Software'),
+(19, 'Standards Organization'),
+(20, 'Telecom Industry'),
+(21, 'University R&D'),
+(22, 'Web User');
+
+LOCK TABLES `organizations` WRITE;
+INSERT INTO `organizations` (id, type, size) VALUES
+(1016,18,NULL);
+
+LOCK TABLES `domains` WRITE;
+INSERT INTO `domains` (id) VALUES
+(109),
+(34287),
+(36332),
+(41381),
+(41481),
+(42827),
+(46188),
+(53408),
+(56330),
+(68257);
+
+LOCK TABLES `activities` WRITE;
+INSERT INTO `activities` (id, domain_id, lead_id, name, statement, closed_on, homepage) VALUES
+(1, 41481, 39441, 'Math', 'http://www.w3.org/Math/Activity', NULL, 'http://www.w3.org/Math/'),
+(2, 68257, 39441, 'Digital Publishing', 'http://www.w3.org/dpub/Activity', NULL, 'http://www.w3.org/dpub/'),
+(3, 68257, 39441, 'Extensible Markup Language (XML)', 'http://www.w3.org/XML/Activity', NULL, 'http://www.w3.org/XML/'),
+(4, 41481, 39441, 'Graphics', 'http://www.w3.org/Graphics/Activity', NULL, 'http://www.w3.org/Graphics/'),
+(5, 41481, 39441, 'HTML', 'http://www.w3.org/html/Activity', NULL, 'http://www.w3.org/html/'),
+(6, 41481, 39441, 'Internationalization', 'http://www.w3.org/International/Activity', NULL, 'http://www.w3.org/International/'),
+(7, 41481, 39441, 'Rich Web Client', 'http://www.w3.org/2006/rwc/Activity', NULL, 'http://www.w3.org/2006/rwc/'),
+(8, 41481, 39441, 'Style', 'http://www.w3.org/Style/Activity', NULL, 'http://www.w3.org/Style/'),
+(9, 41481, 39441, 'Video in the Web', 'http://www.w3.org/2008/WebVideo/Activity', NULL, 'http://www.w3.org/2008/WebVideo/'),
+(10, 41481, 39441, 'XForms', 'http://www.w3.org/2002/Forms/Activity', NULL, 'https://www.w3.org/MarkUp/Forms/'),
+(11, 41481, 39441, 'Fonts', 'http://www.w3.org/Fonts/Activity', NULL, 'http://www.w3.org/Fonts/'),
+(12, 41481, 39441, 'Web Testing', 'http://www.w3.org/testing/Activity', NULL, 'http://www.w3.org/testing/'),
+(13, 46188, 39441, 'Patent Policy', 'http://www.w3.org/2004/pp/Activity', NULL, 'http://www.w3.org/2004/pp/'),
+(14, 46188, 39441, 'Privacy', 'http://www.w3.org/Privacy/Activity', NULL, 'http://www.w3.org/Privacy/'),
+(15, 46188, 39441, 'Security', 'http://www.w3.org/Security/Activity', NULL, 'http://www.w3.org/Security/'),
+(16, 41381, 16289, 'Mobile Web Initiative', 'http://www.w3.org/2005/MWI/Activity', NULL, 'https://www.w3.org/Mobile/'),
+(17, 41381, 39441, 'Multimodal Interaction', 'http://www.w3.org/2002/mmi/Activity', NULL, 'http://www.w3.org/2002/mmi/'),
+(18, 41381, 16289, 'Ubiquitous Web Applications', 'http://www.w3.org/2007/uwa/Activity', NULL, 'http://www.w3.org/2007/uwa/'),
+(19, 41381, 39441, 'Voice Browser', 'http://www.w3.org/Voice/Activity', NULL, 'http://www.w3.org/Voice/'),
+(20, 41381, 39441, 'Web and TV', 'http://www.w3.org/2011/webtv/Activity', NULL, 'http://www.w3.org/2011/webtv/'),
+(21, 42827, 39441, 'WAI International Program Office', 'http://www.w3.org/WAI/IPO/Activity', NULL, 'http://www.w3.org/WAI/IPO/'),
+(22, 42827, 39441, 'WAI Technical', 'http://www.w3.org/WAI/Technical/Activity', NULL, 'http://www.w3.org/WAI/Technical/'),
+(23, 68257, 39441, 'Data', 'http://www.w3.org/2013/data/Activity', NULL, 'http://www.w3.org/2013/data/');
+
+LOCK TABLES `wgDetails` WRITE;
+INSERT INTO `wgDetails` (id, statusBits, trackAffiliation, activity_id) VALUES
+(102,10,'none',NULL),
+(109,14,'none', NULL),
+(111,10,'none', NULL),
+(112,14,'none', NULL),
+(114,10,'none', NULL),
+(34287,10,'none', NULL),
+(36332,2,'none', NULL),
+(41381,10,'none', NULL),
+(41481,14,'none', NULL),
+(42827,14,'none', NULL),
+(46188,10,'none', NULL),
+(53408,10,'none', NULL),
+(56330,10,'none', NULL),
+(7756,14,'none', NULL),
+(31972,14,'none', NULL),
+(32061,1086,'member', 8),
+(47956,4122,'any', NULL),
+(36654,11,'none', NULL),
+(49726,4122,'any', NULL),
+(33280,14,'member', NULL),
+(61499,14,'none', NULL),
+(68257, 10, 'none', NULL);
+
+LOCK TABLES `hierarchy` WRITE;
+INSERT INTO `hierarchy` (super, sub, sponsor, stops, lurker, roles) VALUES
+(102,52794,NULL,0,0,NULL),
+(105,1016,NULL,1,0,NULL),
+(106,102,NULL,0,0,NULL),
+(109,39441,NULL,0,0,NULL),
+(109,34410,NULL,0,0,NULL),
+(109,11537,NULL,0,0,1),
+(109,16289,NULL,0,0,NULL),
+(109,21600,NULL,0,0,NULL),
+(109,47336,NULL,0,0,NULL),
+(109,63888,NULL,0,0,NULL),
+(112,34410,NULL,0,0,NULL),
+(112,39441,NULL,0,0,NULL),
+(112,16289,NULL,0,0,NULL),
+(112,21600,NULL,0,0,NULL),
+(114,47336,NULL,0,0,NULL),
+(114,63888,NULL,0,0,NULL),
+(1016,39441,NULL,0,0,NULL),
+(52794,34410,NULL,0,0,NULL),
+(52794,39441,NULL,0,0,NULL),
+(52794,16289,NULL,0,0,NULL),
+(52794,21600,NULL,0,0,NULL),
+(52794,47336,NULL,0,0,NULL),
+(52794,63888,NULL,0,0,NULL),
+(54127,109,NULL,0,0,NULL),
+(54127,34287,NULL,0,0,NULL),
+(54127,36332,NULL,0,0,NULL),
+(54127,41381,NULL,0,0,NULL),
+(54127,41481,NULL,0,0,NULL),
+(54127,42827,NULL,0,0,NULL),
+(54127,46188,NULL,0,0,NULL),
+(54127,53408,NULL,0,0,NULL),
+(54127,56330,NULL,0,0,NULL),
+(47956,47336,47336,0,0,NULL);
+
+LOCK TABLES `memberTierDescriptions` WRITE;
+INSERT INTO `memberTierDescriptions` (tier, description) VALUES
+(40, 'Full'),
+(20, 'Affiliate'),
+(30, 'Intermediate'),
+(10, 'DC'),
+(0, 'No Fee'),
+(15, 'Startup');
+
+LOCK TABLES `contracts` WRITE;
+INSERT INTO `contracts` (id, last, byWhom, memberId, contractName, feeTier, host, officeId, acRepId, billId, team_retention_contact, dateJoined, dateCreated, contractBegan, contractReceived, currentMember, mitCustNum, vatid, paidThruDate) VALUES
+(195, '2012-02-13 13:00:50', 'kotok', 1016, 'Verity, Inc.', 20, 'MIT', NULL, 39441, NULL, NULL, '1994-11-18', '1994-12-01 05:00:00', '1994-10-01', 1, 0, 8600003215, NULL, '1999-12-31');
+
+LOCK TABLES `contractClasses` WRITE;
+INSERT INTO `contractClasses` (id, last, seq, endDate, startDate, feeRate, feeCurrency, byWhom, feeTier, rateDate, currencyAmount) VALUES
+(195, '2008-10-07 14:35:39', 195, '1996-09-30', '1994-10-01', 5000.00, 'USD', 'kotok', 20, NULL, 5000.00),
+(195, '2008-10-07 14:35:39', 1393, '1996-12-31', '1996-10-01', 0.00, 'USD', 'kotok', 20, NULL, 0.00),
+(195, '2008-10-07 14:35:39', 1394, '1996-09-30', '1997-01-01', 5000.00, 'USD', 'kotok', 20, 20, 5000.00);
+
+LOCK TABLES `ppParticipation` WRITE;
+INSERT INTO `ppParticipation` (id, wgId, last, created, ended, noParticipationCommitment, comments) VALUES
+(47336, 47956, '2012-02-14 11:37:36', '2012-02-14 11:37:36', '0000-00-00 00:00:00', 1, '');
+
+UNLOCK TABLES;
+
