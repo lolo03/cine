@@ -1,0 +1,21 @@
+{% extends "CineLivreBundle::cine.html.twig" %}
+
+{% block content %}
+<p>Liste des éditeurs</p>
+<table border="1">
+<tbody>
+  <tr>
+  <th width="200px">Nom</th>
+  <th width="200px">Adresse</th>
+  <th width="200px">Web</th>
+  </tr>
+  {% for editeur in liste_editeurs %}
+  <tr>
+  <td>{{ editeur.nom }}</td>
+  <td>{{ editeur.adresse }}</td>
+  <td>{{ editeur.web }}</td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endblock content %}
