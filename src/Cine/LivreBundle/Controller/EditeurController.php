@@ -10,8 +10,18 @@ class EditeurController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('CineLivreBundle:Editeur:index.html.twig',
-        array('nom' => 'Laurent'));
+        return $this->render('CineLivreBundle:Editeur:index.html.twig');
+    }
+
+    public function afficherAction()
+    {
+	$repository = $this->getDoctrine()
+       	            ->getManager()
+                    ->getRepository('CineLivreBundle:Editeur');
+
+        $listeEditeurs = $repository->findAll();
+        return $this->render('CineLivreBundle:Editeur:liste.html.twig',
+        array('liste_editeurs' => $listeEditeurs));
     }
 
     public function ajouterAction()
@@ -28,8 +38,7 @@ class EditeurController extends Controller
         if ($this->getRequest()->getMethod() == 'POST') {
           $this->get('session')->getFlashBag()->add('info', 'Editeur enregistré');
         }
-        return $this->render('CineLivreBundle:Editeur:index.html.twig',
-        array('nom' => 'Laurent2'));
+	return new Response('Editeur ajouté'); 
     }
 
 }
